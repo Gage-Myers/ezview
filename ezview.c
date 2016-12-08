@@ -6,9 +6,13 @@ Author: Gage Myers
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ppmrw.h"
 
 #define GLFW_INCLUDE_ES2
 #include <GLFW/glfw3.h>
+
+int img_width, img_height, max_color, ppm_ver;
+pixel      *buffer;
 
 static const GLuint WIDTH = 800;
 static const GLuint HEIGHT = 600;
@@ -74,7 +78,53 @@ GLint common_get_shader_program(const char *vertex_shader_source, const char *fr
     return shader_program;
 }
 
-int main(void) {
+int main(int argc, char *argv[])  {
+    /* Verify that correct number of arguments are supplied */
+  if (argc != 2) {
+    fprintf(stderr, "\nERROR: Incorrect number of arguments."
+                    "\nExpected two arguments, %d were supplied."
+                    "\nFormat: Program_Name File_Name.", argc);
+    exit(1);
+  }
+
+  /* Open Image and read-in properties */
+  FILE *img_file;
+  img_file = fopen(argv[1], "rb");
+  int error = initiate(img_file, &img_width, &img_height, &max_color, &ppm_ver);
+  if (error) {
+    switch(error) {
+      /* Case - Invalid Magic Number */
+      case 1:
+        fprintf(stderr, "\nERROR %d: Invalid or no magic number detected"
+                        " in file.", error);
+        break;
+
+      /* Case - File supplied for input does not exist */
+      case 2:
+        fprintf(stderr, "\nERROR %d: Input file does not exist.",
+            error);
+        break;
+
+      /* Case - Invalid Header */
+      case 3:
+        fprintf(stderr, "\nERROR %d: Header is invalid.", error);
+        break;
+    }
+    fclose(img_file);
+    exit(1);
+  }
+
+  /* Read-in image to pixel buffer */
+  buffer = (pixel *) malloc(sizeof(pixel) * img_width * img_height);
+
+  if (ppm_ver == 3) {
+    read3(img_file, buffer, &img_width, &img_height, &max_color);
+  } else {
+    read6(img_file, buffer, &img_width, &img_height, &max_color);
+  }
+
+  fclose(img_file);
+
     GLuint shader_program, vbo;
     GLint pos;
     GLFWwindow* window;
