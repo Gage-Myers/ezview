@@ -12,5 +12,7 @@ make
 
 # Requirements
 gcc compiler
+
 OpenGLWS 3.0 or higher
+
 OpenGL ES 2.0 or higher
