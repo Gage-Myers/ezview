@@ -88,52 +88,52 @@ static inline void compileShader(GLuint shader) {
 }
 
 static void key_event_handler( GLFWwindow* window, int key, int scancode, int action, int mods) {
-    // Scale Increase -> Y
-    if (key == GLFW_KEY_Y && action == GLFW_PRESS)
+    // Scale Increase
+    if (key == GLFW_KEY_Q && action == GLFW_PRESS)
       affine_mat[0].scale *= 1.1;
 
-    // Scale Decrease -> T
-    if (key == GLFW_KEY_T && action == GLFW_PRESS)
+    // Scale Decrease
+    if (key == GLFW_KEY_E && action == GLFW_PRESS)
     	affine_mat[0].scale /= 1.1;
 
-    // Translate Right -> D
-    if (key == GLFW_KEY_D && action == GLFW_PRESS)
+    // Translate Right
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
     	affine_mat[0].translate[0] += 0.1;
 
-    // Translate Left -> A
-    if (key == GLFW_KEY_A && action == GLFW_PRESS)
+    // Translate Left
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
     	affine_mat[0].translate[0] -= 0.1;
 
-    // Translate Up -> W
-    if (key == GLFW_KEY_W && action == GLFW_PRESS)
+    // Translate Up
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
       affine_mat[0].translate[1] += 0.1;
 
-    // Translate Down -> S
-    if (key == GLFW_KEY_S && action == GLFW_PRESS)
+    // Translate Down
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
       affine_mat[0].translate[1] -= 0.1;
 
-    // Shear Up -> ^
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    // Shear Up
+    if (key == GLFW_KEY_W && action == GLFW_PRESS)
     	affine_mat[0].shear[1] += 0.1;
 
-    // Shear Down -> \/
-    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    // Shear Down
+    if (key == GLFW_KEY_S && action == GLFW_PRESS)
     	affine_mat[0].shear[1] -= 0.1;
 
-    // Shear Right -> ->
-    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+    // Shear Right
+    if (key == GLFW_KEY_D && action == GLFW_PRESS)
     	affine_mat[0].shear[0] += 0.1;
 
-    // Shear Left -> <-
-    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    // Shear Left
+    if (key == GLFW_KEY_A && action == GLFW_PRESS)
     	affine_mat[0].shear[0] -= 0.1;
 
-    // Rotate Counter-Clockwise -> G
-    if (key == GLFW_KEY_G && action == GLFW_PRESS)
+    // Rotate Counter-Clockwise
+    if (key == GLFW_KEY_T && action == GLFW_PRESS)
       affine_mat[0].rotate += (90 * M_PI) / 180;
 
-    // Rotate Clockwise -> H
-    if (key == GLFW_KEY_H && action == GLFW_PRESS)
+    // Rotate Clockwise
+    if (key == GLFW_KEY_Y && action == GLFW_PRESS)
       affine_mat[0].rotate -= (90 * M_PI) / 180;
 }
 
@@ -211,10 +211,6 @@ int init() {
     glBindTexture(GL_TEXTURE_2D, texID);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-
-    // TODO: FIX THIS SHIT
-
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img_width, img_height, 0, GL_RGB,
                GL_UNSIGNED_BYTE, buffer);
